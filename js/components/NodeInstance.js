@@ -9,7 +9,7 @@ export const NODE_UI_CONFIG = {
     DEFAULT_NODE_WIDTH_PX: 220,
     NODE_MIN_HEIGHT_PX: 150,
     HEADER_HEIGHT_PX: 36,
-    TOOLTIP_DELAY_MS: 700,
+    TOOLTIP_DELAY_MS: 1000,
 };
 
 export class NodeInstance {
