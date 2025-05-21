@@ -121,7 +121,7 @@ body {
     height: var(--statusbar-height);
     flex-shrink: 0;
     position: fixed;
-    bottom: calc(var(--syntax-input-bottom-offset) + var(--syntax-input-total-height-approx) + var(--gap-between-fixed-elements));
+    bottom: 0;
     left: 0;
     width: 100%;
     z-index: 999;
