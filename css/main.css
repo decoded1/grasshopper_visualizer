@@ -168,7 +168,7 @@ body {
 
 .zoom-controls {
     position: absolute;
-    bottom: 15px;
+    bottom: 40px;
     right: 15px;
     display: flex;
     flex-direction: column;
@@ -211,7 +211,7 @@ body {
 
 .syntax-input-container {
     position: fixed;
-    bottom: 10px;
+    bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
     width: calc(100% - 40px);

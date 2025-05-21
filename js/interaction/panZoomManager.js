@@ -1,6 +1,7 @@
 let panZoomState = { x: 0, y: 0, scale: 1 };
 let isPanning = false;
 let lastPanMousePosition = { x: 0, y: 0 };
+let lastTouchPosition = { x: 0, y: 0 };
 
 let workspaceContainerElement = null;
 let workspaceElement = null;
@@ -19,12 +20,18 @@ export function initPanZoom(container, workspace, initialState, onUpdate) {
     workspaceContainerElement.addEventListener('mouseup', handlePanEnd);
     workspaceContainerElement.addEventListener('mouseleave', handlePanEnd); // Stop panning if mouse leaves
     workspaceContainerElement.addEventListener('wheel', handleZoom, { passive: false });
+    
+    // Touch events for mobile/tablet
+    workspaceContainerElement.addEventListener('touchstart', handleTouchStart, { passive: false });
+    workspaceContainerElement.addEventListener('touchmove', handleTouchMove, { passive: false });
+    workspaceContainerElement.addEventListener('touchend', handleTouchEnd);
+    workspaceContainerElement.addEventListener('touchcancel', handleTouchEnd);
 
     applyPanZoomStyle(); // Apply initial state
 }
 
 function handlePanStart(event) {
-    if (event.button === 1 || (event.button === 0 && event.altKey)) { // Middle mouse or Alt+Left Click
+    if (event.button === 1 || (event.button === 0 && event.altKey) || (event.button === 0 && event.shiftKey)) { // Middle mouse, Alt+Left Click, or Shift+Left Click
         isPanning = true;
         lastPanMousePosition = { x: event.clientX, y: event.clientY };
         workspaceContainerElement.style.cursor = 'grabbing';
@@ -53,6 +60,52 @@ function handlePanEnd(event) {
     if (isPanning) {
         isPanning = false;
         workspaceContainerElement.style.cursor = 'default';
+    }
+}
+
+// Touch event handlers
+function handleTouchStart(event) {
+    // Detect Shift + two finger touch (using two fingers)
+    if ((event.touches.length === 2 && event.shiftKey) || event.touches.length === 2) {
+        isPanning = true;
+        const touch1 = event.touches[0];
+        const touch2 = event.touches[1];
+        // Use the midpoint between the two touches
+        lastTouchPosition = {
+            x: (touch1.clientX + touch2.clientX) / 2,
+            y: (touch1.clientY + touch2.clientY) / 2
+        };
+        event.preventDefault();
+    }
+}
+
+function handleTouchMove(event) {
+    if (!isPanning || event.touches.length !== 2) return;
+    event.preventDefault();
+    
+    const touch1 = event.touches[0];
+    const touch2 = event.touches[1];
+    const currentMidpoint = {
+        x: (touch1.clientX + touch2.clientX) / 2,
+        y: (touch1.clientY + touch2.clientY) / 2
+    };
+    
+    const dx = currentMidpoint.x - lastTouchPosition.x;
+    const dy = currentMidpoint.y - lastTouchPosition.y;
+    
+    panZoomState.x += dx;
+    panZoomState.y += dy;
+    
+    lastTouchPosition = currentMidpoint;
+    applyPanZoomStyle();
+    if (onPanZoomUpdateCallback) {
+        onPanZoomUpdateCallback();
+    }
+}
+
+function handleTouchEnd(event) {
+    if (isPanning && event.touches.length < 2) {
+        isPanning = false;
     }
 }
 
