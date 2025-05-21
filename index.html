@@ -13,21 +13,93 @@
     <link rel="stylesheet" href="css/tooltip.css">
     <link rel="stylesheet" href="css/tooltip-enhanced.css">
     <link rel="stylesheet" href="css/value-display.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- Add links to other specific CSS files like syntax-input.css if you create it -->
 
     <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 <body>
     <div class="toolbar" id="toolbar">
-        <button class="tool-button" id="btnLoadRecipeFromFile" title="Load recipe from a JSON file">Load Recipe File</button>
-        <input type="file" id="recipeFileInput" accept=".json">
-        <button class="tool-button" id="btnSaveGraph" title="Save current graph state">Save Graph</button>
-        <button class="tool-button" id="btnResetLayout" title="Re-apply automatic layout">Reset Layout</button>
-        <button class="tool-button" id="btnClearSelection" title="Deselect all nodes">Clear Selection</button>
-        <button class="tool-button" id="btnDeleteSelected" title="Delete selected nodes (Del/Backspace)">Delete Selected</button>
-        <button class="tool-button" id="btnToggleGrid" title="Toggle background grid visibility">Toggle Grid</button>
-        <button class="tool-button" id="btnToggleConnections" title="Toggle wire visibility">Toggle Wires</button>
+        <div class="toolbar-logo">
+            <div class="logo-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="10" height="10">
+                    <path d="M12 2L2 12l10 10 10-10-10-10z"></path>
+                </svg>
+            </div>
+            <span class="logo-text">Grasshopper Visualizer</span>
+        </div>
+        
+        <div class="toolbar-divider"></div>
+        
+        <div class="toolbar-section">
+            <button class="tool-button" id="btnLoadRecipeFromFile" title="Load recipe from a JSON file">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 8l-5-5-5 5M12 3v12"></path>
+                </svg>
+                Load
+            </button>
+            <input type="file" id="recipeFileInput" accept=".json">
+            
+            <button class="tool-button" id="btnSaveGraph" title="Save current graph state">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                    <polyline points="7 3 7 8 15 8"></polyline>
+                </svg>
+                Save
+            </button>
+        </div>
+        
+        <div class="toolbar-divider"></div>
+        
+        <div class="toolbar-section">
+            <button class="tool-button" id="btnResetLayout" title="Re-apply automatic layout">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M23 4v6h-6"></path>
+                    <path d="M1 20v-6h6"></path>
+                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10"></path>
+                    <path d="M20.49 15a9 9 0 0 1-14.85 3.36L1 14"></path>
+                </svg>
+                Reset
+            </button>
+            
+            <button class="tool-button" id="btnClearSelection" title="Deselect all nodes">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 6L6 18"></path>
+                    <path d="M6 6l12 12"></path>
+                </svg>
+                Clear
+            </button>
+            
+            <button class="tool-button" id="btnDeleteSelected" title="Delete selected nodes (Del/Backspace)">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                </svg>
+                Delete
+            </button>
+        </div>
+        
+        <div class="toolbar-spacer"></div>
+        
+        <div class="toolbar-section">
+            <button class="tool-button" id="btnToggleGrid" title="Toggle background grid visibility">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+                Grid
+            </button>
+            
+            <button class="tool-button" id="btnToggleConnections" title="Toggle wire visibility">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 17H5a2 2 0 0 0-2 2 2 2 0 0 0 2 2h2a2 2 0 0 0 2-2zm0 0h6m0 0h4a2 2 0 0 0 2-2 2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2z"></path>
+                    <path d="M9 5H5a2 2 0 0 0-2 2 2 2 0 0 0 2 2h2a2 2 0 0 0 2-2zm0 0h6m0 0h4a2 2 0 0 0 2-2 2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2z"></path>
+                </svg>
+                Wires
+            </button>
+        </div>
     </div>
 
     <div class="workspace-container" id="workspaceContainer">

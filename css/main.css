@@ -42,9 +42,22 @@
     --chrome-height: 44px;
     --statusbar-height: 26px;
     --statusbar-height: 26px;
-        --syntax-input-bottom-offset: 10px;
-        --syntax-input-total-height-approx: 70px;
-        --gap-between-fixed-elements: 5px;
+    --syntax-input-bottom-offset: 10px;
+    --syntax-input-total-height-approx: 70px;
+    --gap-between-fixed-elements: 5px;
+    
+    /* Toolbar variables */
+    --toolbar-height: 36px;
+    --toolbar-bg: rgba(45, 45, 50, 0.35);
+    --toolbar-border: rgba(255, 255, 255, 0.1);
+    --toolbar-shadow: rgba(0, 0, 0, 0.25);
+    
+    --btn-bg: rgba(60, 60, 65, 0.45);
+    --btn-border: rgba(255, 255, 255, 0.12);
+    --btn-hover-bg: rgba(var(--accent-color-rgb), 0.7);
+    --btn-hover-border: rgba(var(--accent-color-rgb), 0.8);
+    
+    --divider-color: rgba(255, 255, 255, 0.08);
 }
 
 * {
@@ -71,20 +84,98 @@ body {
 .toolbar {
     display: flex;
     align-items: center;
-    padding: 0 15px;
-    gap: 10px;
-    height: var(--chrome-height);
-    flex-shrink: 0;
+    padding: 0 12px;
+    gap: 6px;
+    height: var(--toolbar-height);
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 1000;
-    background-color: var(--glass-bg-light);
+    background-color: var(--toolbar-bg);
     backdrop-filter: blur(var(--glass-backdrop-blur));
     -webkit-backdrop-filter: blur(var(--glass-backdrop-blur));
-    border-bottom: 1px solid var(--glass-border);
-    box-shadow: 0 3px 12px var(--glass-shadow-color);
+    border-bottom: 1px solid var(--toolbar-border);
+    box-shadow: 0 2px 8px var(--toolbar-shadow);
+}
+
+.toolbar-logo {
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
+}
+
+.logo-text {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    margin-left: 4px;
+    opacity: 0.9;
+}
+
+.logo-icon {
+    width: 16px;
+    height: 16px;
+    background-color: var(--accent-color);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tool-button {
+    background-color: var(--btn-bg);
+    border: 1px solid var(--btn-border);
+    color: var(--text-bright);
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 10px;
+    font-weight: 500;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    transition: all var(--transition-speed) ease;
+}
+
+.tool-button:hover {
+    background-color: var(--btn-hover-bg);
+    border-color: var(--btn-hover-border);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.tool-button:active {
+    transform: translateY(0px);
+}
+
+.tool-button svg {
+    width: 12px;
+    height: 12px;
+    margin-right: 4px;
+    opacity: 0.9;
+}
+
+.toolbar-divider {
+    width: 1px;
+    height: 18px;
+    background-color: var(--divider-color);
+    margin: 0 4px;
+}
+
+.toolbar-section {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.toolbar-spacer {
+    flex-grow: 1;
+}
+
+#recipeFileInput {
+    display: none;
 }
 
 .workspace-container {
@@ -92,7 +183,7 @@ body {
     position: relative;
     overflow: hidden;
     background-color: var(--workspace-bg-color);
-    padding-top: var(--chrome-height);
+    padding-top: var(--toolbar-height);
     padding-bottom: calc(var(--statusbar-height) + var(--syntax-input-container-height-approx) + 10px);
 }
 
@@ -136,34 +227,6 @@ body {
 .status-segment {
     padding: 0 8px;
     white-space: nowrap;
-}
-
-.tool-button {
-    background-color: rgba(85, 85, 85, 0.5);
-    border: 1px solid var(--glass-border);
-    color: var(--text-color);
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 12px;
-    font-weight: 500;
-    transition: background-color var(--transition-speed) ease,
-                border-color var(--transition-speed) ease,
-                transform var(--transition-speed) ease;
-}
-
-.tool-button:hover {
-    background-color: rgba(var(--accent-color-rgb), 0.7);
-    border-color: var(--glass-highlight-border-color);
-    transform: translateY(-1px);
-}
-.tool-button:active {
-    background-color: rgba(var(--accent-color-rgb), 0.8);
-    transform: translateY(0px);
-}
-
-#recipeFileInput {
-    display: none;
 }
 
 .zoom-controls {
