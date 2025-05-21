@@ -50,10 +50,10 @@ export async function loadAndParseAllComponents(filePath) {
         componentLibrary = processedData.library;
         componentCategories = processedData.categories;
         console.log("Component library loaded:", Object.keys(componentLibrary).length, "components.");
-        return true;
+        return processedData;
     }
     console.error("Failed to load and process component data from:", filePath);
-    return false;
+    return null;
 }
 
 export function getComponentDefinition(globalAddress) {

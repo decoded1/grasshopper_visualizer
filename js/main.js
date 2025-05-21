@@ -265,11 +265,14 @@ function clearGraph() {
 window.actions = {};
 
 async function initApp() {
+    // Load components first and ensure they're available before proceeding
     const loadedComponentData = await loadAndParseAllComponents('./assets/components.json');
     if (!loadedComponentData) {
         updateStatusBarInfo({ left: "FATAL: Could not load components.json." });
         return;
     }
+    
+    // Set the component library and categories from the loaded data
     setComponentLibrary(loadedComponentData.library);
     setComponentCategories(loadedComponentData.categories);
 
@@ -280,6 +283,63 @@ async function initApp() {
     
     if (!getActiveConnections()) {
         clearActiveConnections();
+    }
+    
+    // Debug: Log available component addresses after loading
+    const componentLibrary = getComponentLibrary() || {};
+    console.log("Available component count:", Object.keys(componentLibrary).length);
+    console.log("Component C0006 exists:", componentLibrary["C0006"] !== undefined);
+    console.log("Component C0007 exists:", componentLibrary["C0007"] !== undefined);
+    console.log("Component C0009 exists:", componentLibrary["C0009"] !== undefined);
+
+    // Only implement recipes if components are loaded successfully
+    if (Object.keys(componentLibrary).length > 0) {
+        try {
+            const simpleRecipeString = JSON.stringify({
+                "nodes_to_create": [
+                    { "id_in_recipe": "test1", "type_address": "C0006", "x": 150, "y": 150 }
+                ],
+                "connections": []
+            });
+            
+            // Use the actual method to parse
+            parseAndImplementRecipe(
+                simpleRecipeString, 
+                createNodeOnCanvas, 
+                addConnectionToState, 
+                clearGraph, 
+                getActiveNodeInstances(), 
+                getActiveConnections()
+            );
+            
+            console.log("Simple recipe implemented successfully");
+            
+            // Now try the original recipe
+            const demoRecipeString = JSON.stringify({
+                "nodes_to_create": [
+                    { "id_in_recipe": "minc1", "type_address": "C0006", "x": 150, "y": 150, "nickNameOverride": "TestMInc" },
+                    { "id_in_recipe": "styles1", "type_address": "C0007", "x": 500, "y": 100 },
+                    { "id_in_recipe": "cpc1", "type_address": "C0009", "x": 150, "y": 450 }
+                ],
+                "connections": [
+                    { "from_node_id": "minc1", "from_anchor_address": "C0006.O01", "to_node_id": "cpc1", "to_anchor_address": "C0009.I04" }
+                ]
+            });
+            
+            parseAndImplementRecipe(
+                demoRecipeString, 
+                createNodeOnCanvas, 
+                addConnectionToState, 
+                clearGraph, 
+                getActiveNodeInstances(), 
+                getActiveConnections()
+            );
+        } catch (e) {
+            console.error("Error implementing recipe:", e);
+            console.error("Error details:", e.message, e.stack);
+        }
+    } else {
+        console.warn("Component library not loaded yet. Skipping initial recipe implementation.");
     }
 
     initPanZoom(workspaceContainer, workspace, getPanZoomState(), () => {
