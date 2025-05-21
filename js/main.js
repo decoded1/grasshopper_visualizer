@@ -285,15 +285,17 @@ async function initApp() {
         clearActiveConnections();
     }
     
+    // Get component library reference once - we'll use this throughout the function
+    const componentLibRef = getComponentLibrary() || {};
+    
     // Debug: Log available component addresses after loading
-    let localComponentLibrary = getComponentLibrary() || {};
-    console.log("Available component count:", Object.keys(localComponentLibrary).length);
-    console.log("Component C0006 exists:", localComponentLibrary["C0006"] !== undefined);
-    console.log("Component C0007 exists:", localComponentLibrary["C0007"] !== undefined);
-    console.log("Component C0009 exists:", localComponentLibrary["C0009"] !== undefined);
+    console.log("Available component count:", Object.keys(componentLibRef).length);
+    console.log("Component C0006 exists:", componentLibRef["C0006"] !== undefined);
+    console.log("Component C0007 exists:", componentLibRef["C0007"] !== undefined);
+    console.log("Component C0009 exists:", componentLibRef["C0009"] !== undefined);
 
     // Only implement recipes if components are loaded successfully
-    if (Object.keys(localComponentLibrary).length > 0) {
+    if (Object.keys(componentLibRef).length > 0) {
         try {
             const simpleRecipeString = JSON.stringify({
                 "nodes_to_create": [
@@ -455,7 +457,7 @@ async function initApp() {
         }
     };
 
-    initToolbar({
+       initToolbar({
         btnLoadRecipeFromFile: document.getElementById('btnLoadRecipeFromFile'),
         recipeFileInput: document.getElementById('recipeFileInput'),
         btnSaveGraph: document.getElementById('btnSaveGraph'),
@@ -466,15 +468,14 @@ async function initApp() {
         btnToggleConnections: document.getElementById('btnToggleConnections')
     }, window.actions);
 
-    // Debug: Log available component addresses before trying to use them
-    let localComponentLibrary = getComponentLibrary() || {};
-    console.log("Available component count:", Object.keys(localComponentLibrary).length);
-    console.log("Component C0006 exists:", localComponentLibrary["C0006"] !== undefined);
-    console.log("Component C0007 exists:", localComponentLibrary["C0007"] !== undefined);
-    console.log("Component C0009 exists:", localComponentLibrary["C0009"] !== undefined);
+    // Use the same componentLibRef variable we declared earlier
+    console.log("Available component count:", Object.keys(componentLibRef).length);
+    console.log("Component C0006 exists:", componentLibRef["C0006"] !== undefined);
+    console.log("Component C0007 exists:", componentLibRef["C0007"] !== undefined);
+    console.log("Component C0009 exists:", componentLibRef["C0009"] !== undefined);
 
     // Only try to implement recipes if we have components loaded
-    if (Object.keys(localComponentLibrary).length > 0) {
+    if (Object.keys(componentLibRef).length > 0) {
         try {
             const simpleRecipeString = JSON.stringify({
                 "nodes_to_create": [
