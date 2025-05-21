@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grasshopper Visualizer & Recipe Tool</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/node.css">
+    <link rel="stylesheet" href="css/connector.css">
+    <link rel="stylesheet" href="css/wire.css">
+    <link rel="stylesheet" href="css/tooltip.css">
+    <link rel="stylesheet" href="css/value-display.css">
+    <!-- Add links to other specific CSS files like syntax-input.css if you create it -->
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <div class="toolbar" id="toolbar">
+        <button class="tool-button" id="btnLoadRecipeFromFile" title="Load recipe from a JSON file">Load Recipe File</button>
+        <input type="file" id="recipeFileInput" accept=".json">
+        <button class="tool-button" id="btnSaveGraph" title="Save current graph state">Save Graph</button>
+        <button class="tool-button" id="btnResetLayout" title="Re-apply automatic layout">Reset Layout</button>
+        <button class="tool-button" id="btnClearSelection" title="Deselect all nodes">Clear Selection</button>
+        <button class="tool-button" id="btnDeleteSelected" title="Delete selected nodes (Del/Backspace)">Delete Selected</button>
+        <button class="tool-button" id="btnToggleGrid" title="Toggle background grid visibility">Toggle Grid</button>
+        <button class="tool-button" id="btnToggleConnections" title="Toggle wire visibility">Toggle Wires</button>
+    </div>
+
+    <div class="workspace-container" id="workspaceContainer">
+        <div class="workspace" id="workspace">
+            <svg id="connectionSvg" class="connection-svg"></svg>
+            <div class="selection-box" id="selectionBox"></div>
+            <!-- Nodes will be dynamically added here by JavaScript -->
+        </div>
+        <div class="zoom-controls" id="zoomControls">
+            <button class="zoom-btn" id="btnZoomIn" title="Zoom In">+</button>
+            <button class="zoom-btn" id="btnZoomOut" title="Zoom Out">-</button>
+            <button class="zoom-btn" id="btnZoomReset" title="Reset Zoom to 100%">1:1</button>
+            <span id="zoomLevelDisplay">100%</span>
+        </div>
+    </div>
+
+    <div class="status-bar" id="statusBar">
+        <span class="status-segment" id="statusInfoLeft">Ready</span>
+        <span class="status-segment" id="statusInfoCoords">X: 0, Y: 0</span>
+        <span class="status-segment" id="statusInfoRight">Nodes: 0 | Connections: 0</span>
+    </div>
+
+    <div class="syntax-input-container" id="syntaxInputContainer">
+        <div class="syntax-label">
+            <span class="icon"></span>
+            Recipe Syntax Input (JSON Format)
+        </div>
+        <div class="input-wrapper">
+            <textarea class="syntax-input" id="recipeSyntaxInput" rows="1"
+                      placeholder='{ "nodes_to_create": [ ... ], "connections": [ ... ] }'></textarea>
+        </div>
+        <button class="submit-syntax-button" id="btnSubmitRecipeSyntax" title="Implement the recipe from the text area">Implement Recipe</button>
+    </div>
+
+    <script src="js/main.js" type="module" defer></script>
+</body>
+</html>

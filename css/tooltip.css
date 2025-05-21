@@ -1,0 +1,142 @@
+.gh-node-tooltip,
+.anchor-tooltip,
+.value-display-tooltip {
+    position: absolute;
+    display: none;
+    width: auto;
+    min-width: 150px;
+    max-width: 300px;
+    background: var(--tooltip-body-bg, rgba(45, 45, 45, 0.92));
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 6px;
+    border: 1px solid var(--tooltip-border, rgba(100, 100, 100, 0.35));
+    box-shadow: 0 5px 18px var(--tooltip-shadow, rgba(0, 0, 0, 0.3));
+    overflow: hidden;
+    z-index: 1100;
+    font-size: 11px;
+    line-height: 1.4;
+    opacity: 0;
+    pointer-events: none;
+    color: var(--text-color, #e8e8e8);
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out, visibility 0s linear 0.2s;
+    transform: translateY(5px);
+}
+
+.gh-node-container.show-tooltip > .gh-node > .node-definition-tooltip,
+.gh-node.show-definition-tooltip .node-definition-tooltip,
+.connector-wrapper.show-tooltip-anchor > .anchor-tooltip, /* Assumes JS adds 'show-tooltip-anchor' to wrapper */
+.gh-value-display-container.show-tooltip .value-display-tooltip {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition-delay: 0s;
+}
+
+
+.tooltip-header {
+    background: var(--tooltip-header-bg, rgba(60, 60, 60, 0.95));
+    padding: 7px 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--tooltip-border, rgba(100, 100, 100, 0.35));
+}
+
+.tooltip-icon {
+    width: 16px;
+    height: 16px;
+    background: var(--accent-color, #0078d4);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.tooltip-icon svg {
+    width: 10px;
+    height: 10px;
+    fill: var(--text-bright, #ffffff);
+}
+
+.tooltip-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-bright, #ffffff);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tooltip-body {
+    padding: 8px 10px;
+}
+
+.tooltip-description {
+    font-size: 11px;
+    margin-bottom: 6px;
+    color: var(--text-muted, rgba(255, 255, 255, 0.75));
+    line-height: 1.45;
+}
+
+.tooltip-info {
+    font-family: 'Consolas', 'Menlo', 'Courier New', monospace;
+    font-size: 10px;
+    color: var(--text-color-muted, rgba(255, 255, 255, 0.75));
+    margin-bottom: 3px;
+    opacity: 0.9;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.tooltip-code-block {
+    background: var(--tooltip-code-bg, rgba(30, 30, 30, 0.9));
+    border-radius: 4px;
+    padding: 6px 8px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    border: 1px solid rgba(0,0,0,0.25);
+    max-height: 100px;
+    overflow-y: auto;
+}
+
+.tooltip-code-block::-webkit-scrollbar {
+    width: 4px;
+}
+.tooltip-code-block::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.1);
+    border-radius: 2px;
+}
+.tooltip-code-block::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.2);
+    border-radius: 2px;
+}
+.tooltip-code-block::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+
+.node-definition-tooltip {
+    top: calc(100% + 8px);
+    left: 50%;
+}
+
+.anchor-tooltip {
+    bottom: calc(100% + 6px);
+    left: 50%;
+}
+
+
+.node-side-connectors.inputs .connector-wrapper .anchor-tooltip {
+    left: calc(100% + 10px);
+    bottom: 50%;
+    transform: translateY(50%);
+}
+.node-side-connectors.outputs .connector-wrapper .anchor-tooltip {
+    right: calc(100% + 10px);
+    left: auto;
+    bottom: 50%;
+    transform: translateY(50%);
+}

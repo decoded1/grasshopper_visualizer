@@ -1,0 +1,63 @@
+.node-side-connectors {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto; /* Allow it to wrap content */
+    display: flex;
+    flex-direction: column;
+    gap: var(--anchor-vertical-gap-px, 10px); /* Use variable if defined, else default */
+    pointer-events: none;
+    z-index: 15; /* Above node body content, below potential popups */
+}
+
+.node-side-connectors.inputs {
+    left: 0px;
+    transform: translate(-50%, -50%); /* Center the anchor itself on the edge */
+}
+
+.node-side-connectors.outputs {
+    right: 0px;
+    transform: translate(50%, -50%); /* Center the anchor itself on the edge */
+}
+
+.connector-wrapper {
+    position: relative;
+    pointer-events: all;
+    height: var(--anchor-height-px, 14px); /* Use variable */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the connector div if wrapper is wider */
+}
+
+.connector {
+    width: var(--anchor-width-px, 14px);  /* Use variable */
+    height: var(--anchor-height-px, 14px); /* Use variable */
+    border-radius: 50%;
+    background: var(--connector-bg, rgba(80, 80, 80, 0.6));
+    border: 1px solid var(--connector-border, rgba(120, 120, 120, 0.4));
+    cursor: crosshair;
+    transition: all var(--transition-speed, 0.15s) ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px; /* Smaller font for single char initials */
+    font-weight: 600;
+    color: var(--text-bright, #ffffff);
+    line-height: 1; /* Helps center single character vertically */
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.connector:hover,
+.connector.active-drag { /* Class added by JS during wire drag */
+    background: var(--connector-hover, #0078d4);
+    border-color: var(--accent-color-bright, #2b88d8);
+    box-shadow: 0 0 8px var(--accent-color-glow, rgba(0, 120, 212, 0.4));
+    transform: scale(1.15);
+    color: white;
+}
+
+.connector.potential-target { /* Class added by JS when dragging a wire over a valid input */
+    background: var(--accent-secondary, #8c44de);
+    border-color: var(--accent-secondary);
+    box-shadow: 0 0 8px rgba(140, 68, 222, 0.5); /* Glow for secondary accent */
+}
