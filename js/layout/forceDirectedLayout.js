@@ -113,7 +113,7 @@ export function updateLayoutCenterTarget(simulation, wsContainer, newPanZoomStat
     if (!simulation || !wsContainer) return;
     panZoomStateRef = newPanZoomState;
     const centerX = (wsContainer.clientWidth / 2 / panZoomStateRef.scale) - (panZoomStateRef.x / panZoomStateRef.scale);
-    const centerY = (wsContainer.clientHeight / 2 / panZoomStateRef.scale) - (panZoomStateRef.y / panZoomState.scale);
+    const centerY = (wsContainer.clientHeight / 2 / panZoomStateRef.scale) - (panZoomStateRef.y / panZoomStateRef.scale);
     const centerForce = simulation.force("center");
     if (centerForce) {
         centerForce.x(centerX).y(centerY);
