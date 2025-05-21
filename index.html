@@ -51,15 +51,15 @@
     </div>
 
     <div class="syntax-input-container" id="syntaxInputContainer">
-        <div class="syntax-label">
-            <span class="icon"></span>
-            Recipe Syntax Input (JSON Format)
+        <div class="editor-header">
+            <div class="editor-icon"></div>
+            <div class="editor-title">Recipe Syntax Input (JSON Format)</div>
         </div>
-        <div class="input-wrapper">
-            <textarea class="syntax-input" id="recipeSyntaxInput" rows="1"
-                      placeholder='{ "nodes_to_create": [ ... ], "connections": [ ... ] }'></textarea>
+        <div class="editor-content">
+            <textarea class="syntax-input" id="recipeSyntaxInput" spellcheck="false" 
+                      placeholder='{ "nodes_to_create": [...], "connections": [...] }'></textarea>
+            <button class="submit-syntax-button" id="btnSubmitRecipeSyntax">Implement Recipe</button>
         </div>
-        <button class="submit-syntax-button" id="btnSubmitRecipeSyntax" title="Implement the recipe from the text area">Implement Recipe</button>
     </div>
 
     <script src="js/main.js" type="module" defer></script>

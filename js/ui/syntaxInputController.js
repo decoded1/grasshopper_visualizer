@@ -145,13 +145,20 @@ export function clearCurrentGraph(activeNodes, activeConnections, svgLayer) {
 
 function autoResizeTextarea(textareaElement) {
     if (!textareaElement) return;
-    textareaElement.style.height = 'auto';
+    textareaElement.style.height = '60px'; // Reset height to base value
     let newHeight = textareaElement.scrollHeight;
-    const maxHeight = parseInt(getComputedStyle(textareaElement).maxHeight) || 200;
-    const minHeight = parseInt(getComputedStyle(textareaElement).minHeight) || 38;
+    const maxHeight = 150; // Match the CSS max-height
+    const minHeight = 60;  // Match the CSS min-height
 
     if (newHeight < minHeight) newHeight = minHeight;
     if (newHeight > maxHeight) newHeight = maxHeight;
 
     textareaElement.style.height = newHeight + 'px';
+    
+    // If content exceeds max height, enable scrolling
+    if (textareaElement.scrollHeight > maxHeight) {
+        textareaElement.style.overflowY = 'auto';
+    } else {
+        textareaElement.style.overflowY = 'hidden';
+    }
 }

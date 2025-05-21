@@ -215,92 +215,134 @@ body {
     left: 50%;
     transform: translateX(-50%);
     width: calc(100% - 40px);
-    max-width: 700px;
+    max-width: 800px;
     z-index: 1000;
-    background-color: rgba(40, 40, 45, 0.55);
+    background-color: var(--glass-bg-base);
     backdrop-filter: blur(var(--glass-backdrop-blur));
     -webkit-backdrop-filter: blur(var(--glass-backdrop-blur));
     border-radius: 10px;
-    box-shadow: 0 5px 18px var(--glass-shadow-color);
-    padding: 12px 15px;
+    box-shadow: 0 8px 24px var(--glass-shadow-color);
     border: 1px solid var(--glass-border-stronger);
-    box-sizing: border-box;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    animation: subtleGlow 4s infinite;
 }
 
-.syntax-label {
+.editor-header {
     display: flex;
     align-items: center;
-    font-size: 12px;
+    padding: 6px 12px; /* Reduced padding for thinner header */
+    background-color: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    height: 18px; /* Fixed height for consistency */
+}
+
+.editor-icon {
+    width: 8px; /* Smaller icon */
+    height: 8px;
+    margin-right: 6px;
+    position: relative;
+}
+
+.editor-icon::before {
+    content: "";
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    width: 6px;
+    height: 6px;
+    background-color: rgba(var(--accent-color-rgb), 0.8);
+    border-radius: 1px;
+}
+
+.editor-title {
+    font-size: 10px; /* Smaller font */
     font-weight: 500;
-    color: var(--text-bright);
-    opacity: 0.9;
+    color: var(--text-muted);
+    letter-spacing: 0.2px;
+    opacity: 0.8;
 }
 
-.syntax-label .icon {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    margin-right: 7px;
-    background-color: rgba(var(--accent-color-rgb), 0.75);
-    border-radius: 2.5px;
-}
-
-.input-wrapper {
-    width: 100%;
-    border-radius: 6px;
-    overflow: hidden;
-    border: 1px solid rgba(120, 120, 120, 0.15);
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    background-color: var(--glass-bg-darker);
+.editor-content {
+    position: relative;
+    min-height: 60px;
 }
 
 .syntax-input {
     width: 100%;
-    min-height: 38px;
+    min-height: 60px;
     max-height: 150px;
-    padding: 10px 12px;
-    font-family: 'Consolas', 'Menlo', 'Courier New', monospace;
-    font-size: 13px;
-    line-height: 1.6;
+    padding: 12px 14px;
+    padding-bottom: 40px; /* Space for the button */
+    background-color: var(--glass-bg-darker);
     color: var(--text-bright);
-    background-color: transparent;
-    border: none;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 13px;
+    line-height: 1.5;
     resize: none;
+    border: none;
     outline: none;
-    display: block;
     box-sizing: border-box;
     overflow-y: auto;
 }
 
-.input-wrapper:focus-within {
-    border-color: var(--glass-highlight-border-color);
-    box-shadow: 0 0 0 2px rgba(var(--accent-color-rgb), 0.2);
+/* Scrollbar styling */
+.syntax-input::-webkit-scrollbar {
+    width: 6px;
+}
+
+.syntax-input::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+}
+
+.syntax-input::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+}
+
+.syntax-input::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
 }
 
 .syntax-input::placeholder {
-    color: var(--text-color-muted);
-    opacity: 0.8;
+    color: rgba(255, 255, 255, 0.3);
     font-style: italic;
 }
 
 .submit-syntax-button {
-    padding: 7px 15px;
-    background-color: rgba(var(--accent-color-rgb), 0.6);
+    position: absolute;
+    bottom: 10px;
+    right: 12px;
+    padding: 6px 12px;
+    background-color: rgba(var(--accent-color-rgb), 0.7);
     color: white;
-    border: 1px solid rgba(var(--accent-color-rgb), 0.7);
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
-    align-self: flex-end;
-    transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+    border: 1px solid rgba(var(--accent-color-rgb), 0.5);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
+
 .submit-syntax-button:hover {
-    background-color: rgba(var(--accent-color-rgb), 0.75);
-    border-color: rgba(var(--accent-color-rgb), 0.9);
+    background-color: var(--accent-hover-color);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(var(--accent-color-rgb), 0.3);
+}
+
+.submit-syntax-button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Simple animation for the glass effect */
+@keyframes subtleGlow {
+    0% { box-shadow: 0 8px 24px var(--glass-shadow-color); }
+    50% { box-shadow: 0 8px 28px rgba(var(--accent-color-rgb), 0.15); }
+    100% { box-shadow: 0 8px 24px var(--glass-shadow-color); }
 }
 
 .selection-box {
