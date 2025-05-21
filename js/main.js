@@ -286,14 +286,14 @@ async function initApp() {
     }
     
     // Debug: Log available component addresses after loading
-    const componentLibrary = getComponentLibrary() || {};
-    console.log("Available component count:", Object.keys(componentLibrary).length);
-    console.log("Component C0006 exists:", componentLibrary["C0006"] !== undefined);
-    console.log("Component C0007 exists:", componentLibrary["C0007"] !== undefined);
-    console.log("Component C0009 exists:", componentLibrary["C0009"] !== undefined);
+    let localComponentLibrary = getComponentLibrary() || {};
+    console.log("Available component count:", Object.keys(localComponentLibrary).length);
+    console.log("Component C0006 exists:", localComponentLibrary["C0006"] !== undefined);
+    console.log("Component C0007 exists:", localComponentLibrary["C0007"] !== undefined);
+    console.log("Component C0009 exists:", localComponentLibrary["C0009"] !== undefined);
 
     // Only implement recipes if components are loaded successfully
-    if (Object.keys(componentLibrary).length > 0) {
+    if (Object.keys(localComponentLibrary).length > 0) {
         try {
             const simpleRecipeString = JSON.stringify({
                 "nodes_to_create": [
@@ -467,14 +467,14 @@ async function initApp() {
     }, window.actions);
 
     // Debug: Log available component addresses before trying to use them
-    const componentLibrary = getComponentLibrary() || {};
-    console.log("Available component count:", Object.keys(componentLibrary).length);
-    console.log("Component C0006 exists:", componentLibrary["C0006"] !== undefined);
-    console.log("Component C0007 exists:", componentLibrary["C0007"] !== undefined);
-    console.log("Component C0009 exists:", componentLibrary["C0009"] !== undefined);
+    let localComponentLibrary = getComponentLibrary() || {};
+    console.log("Available component count:", Object.keys(localComponentLibrary).length);
+    console.log("Component C0006 exists:", localComponentLibrary["C0006"] !== undefined);
+    console.log("Component C0007 exists:", localComponentLibrary["C0007"] !== undefined);
+    console.log("Component C0009 exists:", localComponentLibrary["C0009"] !== undefined);
 
     // Only try to implement recipes if we have components loaded
-    if (Object.keys(componentLibrary).length > 0) {
+    if (Object.keys(localComponentLibrary).length > 0) {
         try {
             const simpleRecipeString = JSON.stringify({
                 "nodes_to_create": [
