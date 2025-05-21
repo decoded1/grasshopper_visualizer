@@ -407,10 +407,11 @@ async function initApp() {
     }, window.actions);
 
     // Debug: Log available component addresses before trying to use them
-    console.log("Available component count:", Object.keys(getComponentLibrary()).length);
-    console.log("Component C0006 exists:", getComponentLibrary()["C0006"] !== undefined);
-    console.log("Component C0007 exists:", getComponentLibrary()["C0007"] !== undefined);
-    console.log("Component C0009 exists:", getComponentLibrary()["C0009"] !== undefined);
+    const componentLibrary = getComponentLibrary() || {};
+    console.log("Available component count:", Object.keys(componentLibrary).length);
+    console.log("Component C0006 exists:", componentLibrary["C0006"] !== undefined);
+    console.log("Component C0007 exists:", componentLibrary["C0007"] !== undefined);
+    console.log("Component C0009 exists:", componentLibrary["C0009"] !== undefined);
 
     // Try with a simpler recipe first to test
     try {
