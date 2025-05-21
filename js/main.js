@@ -413,50 +413,54 @@ async function initApp() {
     console.log("Component C0007 exists:", componentLibrary["C0007"] !== undefined);
     console.log("Component C0009 exists:", componentLibrary["C0009"] !== undefined);
 
-    // Try with a simpler recipe first to test
-    try {
-        const simpleRecipeString = JSON.stringify({
-            "nodes_to_create": [
-                { "id_in_recipe": "test1", "type_address": "C0006", "x": 150, "y": 150 }
-            ],
-            "connections": []
-        });
-        
-        // Use the actual method to parse
-        parseAndImplementRecipe(
-            simpleRecipeString, 
-            createNodeOnCanvas, 
-            addConnectionToState, 
-            clearGraph, 
-            getActiveNodeInstances(), 
-            getActiveConnections()
-        );
-        
-        console.log("Simple recipe implemented successfully");
-        
-        // Now try the original recipe
-        const demoRecipeString = JSON.stringify({
-            "nodes_to_create": [
-                { "id_in_recipe": "minc1", "type_address": "C0006", "x": 150, "y": 150, "nickNameOverride": "TestMInc" },
-                { "id_in_recipe": "styles1", "type_address": "C0007", "x": 500, "y": 100 },
-                { "id_in_recipe": "cpc1", "type_address": "C0009", "x": 150, "y": 450 }
-            ],
-            "connections": [
-                { "from_node_id": "minc1", "from_anchor_address": "C0006.O01", "to_node_id": "cpc1", "to_anchor_address": "C0009.I04" }
-            ]
-        });
-        
-        parseAndImplementRecipe(
-            demoRecipeString, 
-            createNodeOnCanvas, 
-            addConnectionToState, 
-            clearGraph, 
-            getActiveNodeInstances(), 
-            getActiveConnections()
-        );
-    } catch (e) {
-        console.error("Error implementing recipe:", e);
-        console.error("Error details:", e.message, e.stack);
+    // Only try to implement recipes if we have components loaded
+    if (Object.keys(componentLibrary).length > 0) {
+        try {
+            const simpleRecipeString = JSON.stringify({
+                "nodes_to_create": [
+                    { "id_in_recipe": "test1", "type_address": "C0006", "x": 150, "y": 150 }
+                ],
+                "connections": []
+            });
+            
+            // Use the actual method to parse
+            parseAndImplementRecipe(
+                simpleRecipeString, 
+                createNodeOnCanvas, 
+                addConnectionToState, 
+                clearGraph, 
+                getActiveNodeInstances(), 
+                getActiveConnections()
+            );
+            
+            console.log("Simple recipe implemented successfully");
+            
+            // Now try the original recipe
+            const demoRecipeString = JSON.stringify({
+                "nodes_to_create": [
+                    { "id_in_recipe": "minc1", "type_address": "C0006", "x": 150, "y": 150, "nickNameOverride": "TestMInc" },
+                    { "id_in_recipe": "styles1", "type_address": "C0007", "x": 500, "y": 100 },
+                    { "id_in_recipe": "cpc1", "type_address": "C0009", "x": 150, "y": 450 }
+                ],
+                "connections": [
+                    { "from_node_id": "minc1", "from_anchor_address": "C0006.O01", "to_node_id": "cpc1", "to_anchor_address": "C0009.I04" }
+                ]
+            });
+            
+            parseAndImplementRecipe(
+                demoRecipeString, 
+                createNodeOnCanvas, 
+                addConnectionToState, 
+                clearGraph, 
+                getActiveNodeInstances(), 
+                getActiveConnections()
+            );
+        } catch (e) {
+            console.error("Error implementing recipe:", e);
+            console.error("Error details:", e.message, e.stack);
+        }
+    } else {
+        console.warn("Component library not loaded yet. Skipping initial recipe implementation.");
     }
 
     if (typeof d3 !== 'undefined' && Object.keys(getActiveNodeInstances() || {}).length > 0) {
